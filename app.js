@@ -59,8 +59,13 @@ app.get('/', (req, res) => {
  */
 const io = require('socket.io')(server);
 io.on('connection', socket => {
-  socket.on('query', query => {
-    socket.emit('query response', "From server - " + query);
+  console.log('a user connected');
+  socket.on('message_request', message => {
+    console.log('got a message - ' + JSON.stringify(message));
+    socket.emit('message_response', "hey dude");
+  });
+  socket.on('disconnect', function () {
+    console.log('user disconnected');
   });
 });
 
